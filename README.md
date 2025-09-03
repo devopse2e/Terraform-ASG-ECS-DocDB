@@ -10,7 +10,7 @@ This repository contains Terraform configurations to provision a scalable AWS in
 - [Installation and Usage](#installation-and-usage)
 - [Configuration](#configuration)
 - [Outputs](#outputs)
-- [Verification of Repo Folders](#verification-of-repo-folders)
+- [Application](#application)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -69,8 +69,7 @@ The repo is organized into root-level Terraform files and modules for reusabilit
 - **modules/ecs/**: ECS cluster, services, task definitions, ASG for EC2.
 - **modules/ec2-jumpbox/**: Bastion host (jumpbox) in public subnet.
 - **modules/docdb/**: DocumentDB cluster and instances.
-- **.gitignore**: Ignores .terraform, tfstate, etc.
-- **README.md**: This file (generated).
+- **.gitignore**: Ignores .terraform, tfstate, etc..
 - **Other**: terraform.tfvars.example, LICENSE.
 
 (Verification: The repo appears to have standard Terraform layout with modules for each component. No unexpected files; all focus on infrastructure provisioning.)
@@ -121,6 +120,7 @@ Key variables in `variables.tf` (override in terraform.tfvars):
 - `asg_min_size` / `asg_max_size`: Scaling limits.
 - `docdb_instance_class`: DocDB instance type (default: "db.r5.large").
 - `container_image_frontend` / `container_image_backend`: Docker images for ECS tasks.
+- `ssh key file`: local path of ssh key file
 
 Secrets (e.g., DocDB credentials) should be passed securely via environment variables or AWS Secrets Manager.
 
@@ -133,14 +133,10 @@ After apply, outputs include:
 - `jumpbox_public_ip`: Jumpbox IP for SSH.
 
 View with `terraform output`.
+
 ## Application
 After apply, you can view the application by clicking the `ALB DNS`
 
-## Verification of Repo Folders
-- **Root Files**: main.tf (orchestrates modules), variables.tf, outputs.tf, providers.tf—verified as standard.
-- **Modules**: Each component (VPC, ALB, ECS, etc.) in separate folders with their own main.tf—modular and reusable.
-- **No Issues**: No sensitive files (e.g., tfstate) committed; .gitignore properly excludes .terraform/. No redundant or unexpected folders.
-- **Completeness**: Covers all described architecture elements; code is clean and follows Terraform best practices.
 
 ## Contributing
 1. Fork the repo.
